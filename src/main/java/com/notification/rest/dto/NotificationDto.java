@@ -1,11 +1,12 @@
-package com.notification.entities;
+package com.notification.rest.dto;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class NotificationData {
+public class NotificationDto {
+	private UserDto sender;
 	private List<String> receivers;
 	private String object;
 	private String message;

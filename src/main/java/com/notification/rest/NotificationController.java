@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.notification.entities.NotificationData;
+import com.notification.rest.dto.NotificationDto;
 import com.notification.service.NotificationService;
 
 import lombok.extern.apachecommons.CommonsLog;
@@ -18,7 +18,7 @@ public class NotificationController {
 	NotificationService notificationService;
 
 	@PostMapping("/send-notification")
-	public NotificationData sendNotification(@RequestBody NotificationData data) {
+	public NotificationDto sendNotification(@RequestBody NotificationDto data) {
 		log.info("mail info : " + data);
 		notificationService.sendMail(data);
 		return data;

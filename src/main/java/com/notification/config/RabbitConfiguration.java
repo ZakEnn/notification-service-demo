@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfiguration {
 
-	@Value("${activemq.url}")
+	@Value("${rabbitmq.url}")
 	private String url;
-	@Value("${activemq.port}")
+	@Value("${rabbitmq.port}")
 	private int port;
-	@Value("${activemq.user}")
+	@Value("${rabbitmq.user}")
 	private String user;
-	@Value("${activemq.password}")
+	@Value("${rabbitmq.password}")
 	private String password;
-	@Value("${activemq.queue}")
+	@Value("${rabbitmq.queue}")
 	private String queue;
 
 	@Bean
