@@ -1,4 +1,4 @@
-package com.notification.web;
+package com.notification.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
