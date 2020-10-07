@@ -13,13 +13,14 @@ public class NotificationService {
 	@Autowired
 	JavaMailSender javaMailSender;
 
-	public void sendMail(NotificationDto data) {
+	public NotificationDto sendMail(NotificationDto data) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(data.getReceivers().stream().toArray(String[]::new));
 		msg.setSubject(data.getObject());
 		msg.setText(data.getMessage());
 
 		javaMailSender.send(msg);
+		return data;
 	}
 
 }

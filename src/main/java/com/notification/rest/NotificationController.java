@@ -1,6 +1,8 @@
 package com.notification.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +20,10 @@ public class NotificationController {
 	NotificationService notificationService;
 
 	@PostMapping("/send-notification")
-	public NotificationDto sendNotification(@RequestBody NotificationDto data) {
+	public ResponseEntity<NotificationDto> sendNotification(@RequestBody NotificationDto data) {
 		log.info("mail info : " + data);
-		notificationService.sendMail(data);
-		return data;
+		NotificationDto sendedNotif = notificationService.sendMail(data);
+		return ResponseEntity.status(HttpStatus.OK).body(sendedNotif);
 	}
 
 }
