@@ -40,6 +40,7 @@ public class AuditAspect {
 			Map<String, Object> audit = getAudit();
 			audit.put(NotificationConstants.ACTION, name);
 			log.info(audit);
+
 			rabbitTemplate.convertAndSend(audit);
 		}
 

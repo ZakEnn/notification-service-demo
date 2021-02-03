@@ -15,6 +15,7 @@ public class NotificationService {
 
 	public NotificationDto sendMail(NotificationDto data) {
 		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setFrom(data.getSender());
 		msg.setTo(data.getReceivers().stream().toArray(String[]::new));
 		msg.setSubject(data.getObject());
 		msg.setText(data.getMessage());
