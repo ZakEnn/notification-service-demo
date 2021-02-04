@@ -22,8 +22,8 @@ public class NotificationController {
 	@PostMapping("/send-notification")
 	public ResponseEntity<NotificationDto> sendNotification(@RequestBody NotificationDto data) {
 		log.info("mail info : " + data);
-		NotificationDto sendedNotif = notificationService.sendMail(data);
-		return ResponseEntity.status(HttpStatus.OK).body(sendedNotif);
+		NotificationDto sentNotification = notificationService.sendMailWithAttachment(data);
+		return ResponseEntity.status(HttpStatus.OK).body(sentNotification);
 	}
 
 }
