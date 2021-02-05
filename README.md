@@ -4,7 +4,9 @@ Spring boot application that uses javaMail to send notification and enable loggi
 # Application setup
 For Demo purpose 
 
+``` $ docker pull mailhog/mailhog ```
 
 Run the app using maven command:
+
 ``` $ mvn spring-boot:run ```
 
