@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.notification.rest.dto.NotificationDto;
 
+import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
 
 import java.util.Base64;
 import java.util.Map;
@@ -42,13 +43,16 @@ public class NotificationService {
 	public NotificationDto sendMailWithAttachment(NotificationDto data){
 		MimeMessage message = mailSender.createMimeMessage();
 		try {
-			MimeMessageHelper msg = new MimeMessageHelper(message, true);
-			msg.setFrom(data.getSender());
-			msg.setTo(data.getReceivers().stream().toArray(String[]::new));
-			msg.setSubject(data.getObject());
-			msg.setText(data.getMessage());
-			byte[] doc = Base64.getUrlDecoder().decode(appFooterImg);
-			msg.addAttachment("footer.png", new ByteArrayResource(doc));
+			MimeMessageHelper msgHelper = new MimeMessageHelper(message, true);
+			msgHelper.setFrom(data.getSender());
+			msgHelper.setTo(data.getReceivers().stream().toArray(String[]::new));
+			msgHelper.setSubject(data.getObject());
+
+			String htmlText = data.getMessage() + "<br><img src='data:image/png;base64," + appFooterImg + "' alt='embedded footer' />";
+			msgHelper.setText(htmlText, true);
+
+			addAttachments(data, msgHelper);
+
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -62,12 +66,12 @@ public class NotificationService {
 
 	private void addAttachment(Map<String,String> fileB64, MimeMessageHelper helper) {
 		String fileName = fileB64.get("name");
-		byte[] file = org.apache.tomcat.util.codec.binary.Base64.decodeBase64(fileB64.get("value"));
+		byte[] file = Base64.getUrlDecoder().decode(fileB64.get("value"));
 		try {
 			helper.addAttachment(fileName, new ByteArrayResource(file));
-			log.debug("Added a file atachment: " + fileName);
+			log.debug("Added a file attachment: " + fileName);
 		} catch (MessagingException ex) {
-			log.error("Failed to add a file atachment: " + fileName, ex);
+			log.error("Failed to add a file attachment: " + fileName, ex);
 		}
 	}
 
