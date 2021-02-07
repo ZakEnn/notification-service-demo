@@ -1,5 +1,6 @@
 package com.notification.service;
 
+import com.notification.rest.dto.FileDto;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,13 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.notification.rest.dto.NotificationDto;
 
-import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 
 import javax.mail.internet.*;
 
 import java.util.Base64;
-import java.util.Map;
 
 @Service
 @CommonsLog
@@ -64,9 +63,9 @@ public class NotificationService {
 		message.getFiles().forEach(file -> addAttachment(file, helper));
 	}
 
-	private void addAttachment(Map<String,String> fileB64, MimeMessageHelper helper) {
-		String fileName = fileB64.get("name");
-		byte[] file = Base64.getUrlDecoder().decode(fileB64.get("value"));
+	private void addAttachment(FileDto fileDto, MimeMessageHelper helper) {
+		String fileName = fileDto.getName();
+		byte[] file = Base64.getUrlDecoder().decode(fileDto.getValue());
 		try {
 			helper.addAttachment(fileName, new ByteArrayResource(file));
 			log.debug("Added a file attachment: " + fileName);

@@ -2,7 +2,7 @@
 Spring boot application that uses javaMail to send notification and enable logging capabilities using AOP and RabbitMQ.
 
 # Application setup
-For Demo purpose we used mailhog which is a nice email testing tool.
+For Demo purpose we used mailhog docker image which is a nice email testing tool.
 
 ```
     $ docker pull mailhog/mailhog
